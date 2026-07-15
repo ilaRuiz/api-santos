@@ -1,0 +1,25 @@
+{
+  "name": "firebird-middleware-api",
+  "version": "1.0.0",
+  "description": "API Node.js para expor dados de bancos Firebird com rotas seguras para leitura e escrita.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "firebird",
+    "middleware"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "node-firebird": "^1.1.9"
+  }
+}
