@@ -27,24 +27,24 @@ npm.cmd install
 Exemplo para o banco informado:
 
 ```env
-HOST=0.0.0.0
+HOST=127.0.0.1
 PORT=34000
-CORS_ORIGIN=*
+CORS_ORIGIN=http://localhost:8080
 
 DB1_NAME=SM
 DB1_HOST=127.0.0.1
 DB1_PORT=3050
-DB1_PATH=C:\Ultra\Banco\Gestao.fdb
-DB1_USER=SYSDBA
-DB1_PASSWORD=masterkey
+DB1_PATH=C:\\Dados\\Exemplo1.fdb
+DB1_USER=USUARIO_API
+DB1_PASSWORD=SUBSTITUA_POR_SENHA_FORTE
 DB1_POOL_SIZE=5
 
 DB2_NAME=MS
 DB2_HOST=127.0.0.1
 DB2_PORT=3050
-DB2_PATH=C:\Ultra\Banco\Ms.fdb
-DB2_USER=SYSDBA
-DB2_PASSWORD=masterkey
+DB2_PATH=C:\\Dados\\Exemplo2.fdb
+DB2_USER=USUARIO_API
+DB2_PASSWORD=SUBSTITUA_POR_SENHA_FORTE
 DB2_POOL_SIZE=5
 ```
 
@@ -259,3 +259,12 @@ Resposta esperada:
 - Ao criar O.S., a API grava `idn_sistema='MAQUINAS'`, `idn_entregar='N'`, `cidade_prest_servico=2230`, e copia `data_abertura`/`hora_abertura` para `data_entrega`/`hora_entrega`.
 - Para cada servico alocado da O.S., a API calcula `unitario` usando `total_proposta / qtd_horas_proposta`.
 - Em produÃƒÂ§ÃƒÂ£o, use um proxy HTTPS, como Nginx, Caddy, Cloudflare Tunnel ou serviÃƒÂ§o equivalente.
+
+## Segurança antes de expor a API
+
+- Os exemplos de credenciais são fictícios. Use um usuário Firebird exclusivo para a integração, com privilégios mínimos; não utilize `SYSDBA` nem senhas padrão em produção.
+- O padrão `HOST=127.0.0.1` restringe a escuta ao próprio computador. Para acesso por rede, configure explicitamente o endereço e restrinja o acesso por firewall ou VPN.
+- Configure `CORS_ORIGIN` com as origens exatas do site em produção. **CORS não é autenticação**, e não protege contra chamadas diretas aos endpoints.
+- **A implementação atual não possui middleware de autenticação/autorização para as rotas da API.** Inclusive há operações de leitura e escrita de dados empresariais. Não exponha as portas da API à internet até implementar e testar autenticação e autorização, idealmente com HTTPS e limites de acesso.
+- Mantenha o arquivo `.env` fora do versionamento; se uma credencial real já tiver sido publicada, rotacione-a e analise o histórico do Git.
+- Este ajuste modifica apenas exemplos e documentação, não as configurações reais já implantadas nem a segurança do aplicativo em execução.
